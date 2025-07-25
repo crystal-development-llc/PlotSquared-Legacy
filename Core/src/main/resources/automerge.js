@@ -17,7 +17,7 @@ The following utility classes are usable:
  - UUIDHandler
  - DBFunc
  - HybridUtils
- - IMP ( BukkitMain or SpongeMain)
+ - IMP ( BukkitMain )
  - MainCommand
  - MainUtil
  - Settings

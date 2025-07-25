@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * The abstract class supporting {@code BukkitPlayer} and {@code SpongePlayer}.
+ * The abstract class supporting {@code BukkitPlayer}.
  */
 public abstract class PlotPlayer implements CommandCaller, OfflinePlotPlayer {
     private Map<String, byte[]> metaMap = new HashMap<>();
@@ -28,7 +28,7 @@ public abstract class PlotPlayer implements CommandCaller, OfflinePlotPlayer {
 
     /**
      * Efficiently wrap a Player, or OfflinePlayer object to get a PlotPlayer (or fetch if it's already cached)<br>
-     *  - Accepts sponge/bukkit Player (online)
+     *  - Accepts bukkit Player (online)
      *  - Accepts player name (online)
      *  - Accepts UUID
      *  - Accepts bukkit OfflinePlayer (offline)

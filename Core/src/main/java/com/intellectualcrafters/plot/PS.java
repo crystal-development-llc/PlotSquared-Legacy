@@ -369,7 +369,7 @@ public class PS{
     /**
      * Get the server platform this plugin is running on this is running on.
      *
-     * <p>This will be either <b>Bukkit</b> or <b>Sponge</b></p>
+     * <p>This will be <b>Bukkit</b>
      * @return the server implementation
      */
     public String getPlatform() {

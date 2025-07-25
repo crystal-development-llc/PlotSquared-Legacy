@@ -33,8 +33,6 @@ assignees: ''
 **Select one**
 <!-- Select the type you are reporting the issue for (put an "X" between of brackets): -->
 - [] Spigot / Paper *(CraftBukkit should not be used, re-test with Spigot first!)*
-- [] Sponge
-- [] NukkitX
 
 ### Minecraft Version:
 **Select one**
@@ -45,8 +43,6 @@ If your version is not listed, make sure your server runs the latest release of 
 - [] Minecraft 1.10.2
 - [] Minecraft 1.9.4
 - [] Minecraft 1.8.8
-- [] Minecraft Bedrock Edition *specify version*:
-- [] Sponge *specify version*:
 
 ### Server build info: 
 <!--- Run /version in-game or in console & paste the full output here: -->

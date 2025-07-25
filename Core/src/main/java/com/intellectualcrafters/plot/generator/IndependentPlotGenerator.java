@@ -10,7 +10,7 @@ import com.intellectualcrafters.plot.util.block.ScopedLocalBlockQueue;
 
 /**
  * This class allows for implementation independent world generation.
- *     - Sponge/Bukkit API
+ *     - Bukkit API
  * Use the specify method to get the generator for that platform.
  */
 public abstract class IndependentPlotGenerator {
@@ -64,7 +64,7 @@ public abstract class IndependentPlotGenerator {
     public abstract void initialize(PlotArea area);
 
     /**
-     * Get the generator for your specific implementation (bukkit/sponge).<br>
+     * Get the generator for your specific implementation (bukkit).<br>
      *  - e.g. YourIndependentGenerator.&lt;ChunkGenerator&gt;specify() - Would return a ChunkGenerator object<br>
      * @param <T>
      * @param <T>
