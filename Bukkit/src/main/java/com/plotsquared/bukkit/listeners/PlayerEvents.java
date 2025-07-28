@@ -253,6 +253,9 @@ public class PlayerEvents extends PlotListener implements Listener {
             case POWERED_RAIL:
                 return;
             default:
+                if (!Settings.Redstone.CHECK_PISTONS) {
+                    return;
+                }
                 Location loc = BukkitUtil.getLocation(block.getLocation());
                 PlotArea area = loc.getPlotArea();
                 if (area == null) {

@@ -41,7 +41,7 @@ public class Settings extends Config {
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
         // Protection
-        Redstone.DISABLE_OFFLINE = config.getBoolean("protection.redstone.disable-offline");
+        Redstone.CHECK_PISTONS = config.getBoolean("protection.redstone.check-pistons", Redstone.CHECK_PISTONS);
         Redstone.DISABLE_UNOCCUPIED = config.getBoolean("protection.redstone.disable-unoccupied", Redstone.DISABLE_UNOCCUPIED);
 
         // PlotMe
@@ -275,8 +275,8 @@ public class Settings extends Config {
     public static final class Redstone {
         @Comment("Disable redstone in unoccupied plots")
         public static boolean DISABLE_UNOCCUPIED = false;
-        @Comment("Disable redstone when all owners/trusted/members are offline")
-        public static boolean DISABLE_OFFLINE = false;
+        @Comment({"Allows pistons to be checked by disable unoccupied"})
+        public static boolean CHECK_PISTONS = true;
         @Comment("Detect and cancel invalid pistons on the edge of plots (e.g. placed with WorldEdit)")
         public static boolean DETECT_INVALID_EDGE_PISTONS = false;
     }
