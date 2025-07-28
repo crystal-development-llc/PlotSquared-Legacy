@@ -879,7 +879,7 @@ public class PlayerEvents extends PlotListener implements Listener {
         event.setCancelled(true);
         String message = event.getMessage();
         String format = C.PLOT_CHAT_FORMAT.s();
-        String sender = event.getPlayer().getDisplayName();
+        String sender = event.getPlayer().getName();
         PlotId id = plot.getId();
         Set<Player> recipients = event.getRecipients();
         Set<Player> spies = new HashSet<>();
