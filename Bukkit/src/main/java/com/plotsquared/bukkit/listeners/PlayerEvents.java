@@ -255,72 +255,13 @@ public class PlayerEvents extends PlotListener implements Listener {
     }
 
     @EventHandler public void onProjectileLaunch(ProjectileLaunchEvent event) {
-        Projectile entity = event.getEntity();
-        if (!(entity instanceof ThrownPotion)) {
-            return;
-        }
-        ProjectileSource shooter = entity.getShooter();
-        if (!(shooter instanceof Player)) {
-            return;
-        }
-        Location l = BukkitUtil.getLocation(entity);
-        if (!PS.get().hasPlotArea(l.getWorld())) {
-            return;
-        }
-        PlotPlayer pp = BukkitUtil.getPlayer((Player) shooter);
-        Plot plot = l.getOwnedPlot();
-        if (plot != null && !plot.isAdded(pp.getUUID())) {
-            entity.remove();
-            event.setCancelled(true);
-        }
+        event.getEntity().remove();
+        event.setCancelled(true);
     }
 
     @EventHandler public boolean onProjectileHit(ProjectileHitEvent event) {
-        Projectile entity = event.getEntity();
-        Location loc = BukkitUtil.getLocation(entity);
-        if (!PS.get().hasPlotArea(loc.getWorld())) {
-            return true;
-        }
-        PlotArea area = loc.getPlotArea();
-        if (area == null) {
-            return true;
-        }
-        Plot plot = area.getPlot(loc);
-        ProjectileSource shooter = entity.getShooter();
-        if (shooter instanceof Player) {
-            PlotPlayer pp = BukkitUtil.getPlayer((Player) shooter);
-            if (plot == null) {
-                if (!Permissions.hasPermission(pp, C.PERMISSION_PROJECTILE_UNOWNED)) {
-                    entity.remove();
-                    return false;
-                }
-                return true;
-            }
-            if (plot.isAdded(pp.getUUID()) || Permissions
-                .hasPermission(pp, C.PERMISSION_PROJECTILE_OTHER)) {
-                return true;
-            }
-            entity.remove();
-            return false;
-        }
-        if (!(shooter instanceof Entity) && shooter != null) {
-            if (plot == null) {
-                entity.remove();
-                return false;
-            }
-            Location sLoc =
-                BukkitUtil.getLocation(((BlockProjectileSource) shooter).getBlock().getLocation());
-            if (!area.contains(sLoc.getX(), sLoc.getZ())) {
-                entity.remove();
-                return false;
-            }
-            Plot sPlot = area.getOwnedPlotAbs(sLoc);
-            if (sPlot == null || !PlotHandler.sameOwners(plot, sPlot)) {
-                entity.remove();
-                return false;
-            }
-        }
-        return true;
+        event.getEntity().remove();
+        return false;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
