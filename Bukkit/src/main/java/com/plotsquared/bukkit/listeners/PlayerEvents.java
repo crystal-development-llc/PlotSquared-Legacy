@@ -224,88 +224,33 @@ public class PlayerEvents extends PlotListener implements Listener {
         Block block = event.getBlock();
         switch (block.getType()) {
             case OBSERVER:
-            case REDSTONE_LAMP_OFF:
-            case REDSTONE_WIRE:
-            case REDSTONE_LAMP_ON:
             case PISTON_BASE:
             case PISTON_STICKY_BASE:
-            case IRON_DOOR_BLOCK:
-            case LEVER:
-            case WOODEN_DOOR:
-            case FENCE_GATE:
-            case WOOD_BUTTON:
-            case STONE_BUTTON:
-            case IRON_PLATE:
-            case WOOD_PLATE:
-            case STONE_PLATE:
-            case GOLD_PLATE:
-            case SPRUCE_DOOR:
-            case BIRCH_DOOR:
-            case JUNGLE_DOOR:
-            case ACACIA_DOOR:
-            case DARK_OAK_DOOR:
-            case IRON_TRAPDOOR:
-            case SPRUCE_FENCE_GATE:
-            case BIRCH_FENCE_GATE:
-            case JUNGLE_FENCE_GATE:
-            case ACACIA_FENCE_GATE:
-            case DARK_OAK_FENCE_GATE:
-            case POWERED_RAIL:
-                return;
-            default:
                 if (!Settings.Redstone.CHECK_PISTONS) {
                     return;
                 }
+            case REDSTONE_TORCH_ON:
+            case DIODE_BLOCK_ON:
                 Location loc = BukkitUtil.getLocation(block.getLocation());
                 PlotArea area = loc.getPlotArea();
-                if (area == null) {
-                    return;
-                }
-                Plot plot = area.getOwnedPlot(loc);
-                if (plot == null) {
-                    return;
-                }
-                if (Flags.REDSTONE.isFalse(plot)) {
-                    event.setNewCurrent(0);
-                    return;
-                }
-                if (Settings.Redstone.DISABLE_OFFLINE) {
-                    boolean disable;
-                    if (plot.isMerged()) {
-                        disable = true;
-                        for (UUID owner : plot.getOwners()) {
-                            if (UUIDHandler.getPlayer(owner) != null) {
-                                disable = false;
-                                break;
+                if (area != null) {
+                    Plot plot = area.getOwnedPlot(loc);
+                    if (plot == null) {
+                        return;
+                    }
+                    if (Flags.REDSTONE.isFalse(plot)) {
+                        event.setNewCurrent(0);
+                        return;
+                    }
+                    if (Settings.Redstone.DISABLE_UNOCCUPIED) {
+                        for (Entry<String, PlotPlayer> entry : UUIDHandler.getPlayers().entrySet()) {
+                            if (plot.equals(entry.getValue().getCurrentPlot())) {
+                                return;
                             }
                         }
-                    } else {
-                        disable = UUIDHandler.getPlayer(plot.owner) == null;
-                    }
-                    if (disable) {
-                        for (UUID trusted : plot.getTrusted()) {
-                            if (UUIDHandler.getPlayer(trusted) != null) {
-                                disable = false;
-                                break;
-                            }
-                        }
-                        if (disable) {
-                            event.setNewCurrent(0);
-                            return;
-                        }
+                        event.setNewCurrent(0);
                     }
                 }
-                if (Settings.Redstone.DISABLE_UNOCCUPIED) {
-                    for (Entry<String, PlotPlayer> entry : UUIDHandler.getPlayers().entrySet()) {
-                        if (plot.equals(entry.getValue().getCurrentPlot())) {
-                            return;
-                        }
-                    }
-                    event.setNewCurrent(0);
-                }
-        }
-    }
-
         }
     }
 
