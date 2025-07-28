@@ -1,7 +1,5 @@
 package com.intellectualcrafters.plot;
 
-import static org.junit.Assert.assertEquals;
-
 import com.google.common.base.Optional;
 import com.intellectualcrafters.plot.database.AbstractDBTest;
 import com.intellectualcrafters.plot.database.DBFunc;
@@ -12,8 +10,9 @@ import com.intellectualcrafters.plot.object.PlotBlock;
 import com.intellectualcrafters.plot.object.PlotId;
 import com.intellectualcrafters.plot.util.EventUtil;
 import com.intellectualcrafters.plot.util.EventUtilTest;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -24,7 +23,7 @@ public class FlagTest {
     private Object testBlock;
     private Flag<? extends Collection<?>> use = Flags.USE;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         EventUtil.manager = new EventUtilTest();
         DBFunc.dbManager = new AbstractDBTest();
@@ -49,7 +48,7 @@ public class FlagTest {
             //   assertThat(flag2.get(), (Matcher<? super HashSet<PlotBlock>>) IsCollectionContaining.hasItem(testBlock));
         }
         if (flag.isPresent() && flag2.isPresent()) {
-            assertEquals(flag.get(), flag2.get());
+            Assertions.assertEquals(flag.get(), flag2.get());
         }
     }
 }

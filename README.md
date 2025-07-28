@@ -25,8 +25,7 @@ is to provide a lag-free and smooth experience.
 * [API Documentation](https://github.com/IntellectualSites/PlotSquared-Legacy/wiki/API-Documentation)
 
 # Building
-Gradle is the **recommended** way to build the project. Use `./gradlew build` in the main project directory to build the project. Gradle is required if you intend to build or develop the Sponge module.
-If you prefer to use maven, a `pom.xml` file is provided for working with the Bukkit part of the plugin.
+Gradle is the **recommended** way to build the project. Use `./gradlew build` in the main project directory to build the project.
 
 # Contributing
 Feel free to contribute, if you feel like you can improve the plugin in any way. Make sure to test your code before sending it away from us, as committing broken code will block you from future contribution.

@@ -6,6 +6,8 @@ Sponge/build
 Core/build
 Bukkit/build
 Nukkit/build
+build/
+builds/
 
 ### Maven ###
 /mvn
