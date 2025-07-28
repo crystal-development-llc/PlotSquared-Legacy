@@ -30,13 +30,12 @@ import com.plotsquared.bukkit.database.plotme.PlotMeConnector_017;
 import com.plotsquared.bukkit.generator.BukkitPlotGenerator;
 import com.plotsquared.bukkit.listeners.*;
 import com.plotsquared.bukkit.placeholders.Placeholders;
-import com.plotsquared.bukkit.titles.DefaultTitle_111;
+import com.plotsquared.bukkit.titles.DefaultTitle_183;
 import com.plotsquared.bukkit.util.*;
 import com.plotsquared.bukkit.util.block.BukkitLocalQueue;
 import com.plotsquared.bukkit.util.block.BukkitLocalQueue_1_7;
 import com.plotsquared.bukkit.util.block.BukkitLocalQueue_1_8;
 import com.plotsquared.bukkit.util.block.BukkitLocalQueue_1_8_3;
-import com.plotsquared.bukkit.util.block.BukkitLocalQueue_1_9;
 import com.plotsquared.bukkit.uuid.DefaultUUIDWrapper;
 import com.plotsquared.bukkit.uuid.FileUUIDHandler;
 import com.plotsquared.bukkit.uuid.LowerOfflineUUIDWrapper;
@@ -153,13 +152,13 @@ public final class BukkitMain extends JavaPlugin implements Listener, IPlotMain 
 
     @Override
     public void onEnable() {
-        if (getServerVersion()[1] > 12) {
+        if (getServerVersion()[1] > 8) {
             Bukkit.getLogger().severe("================================================");
             Bukkit.getLogger().severe("====== THIS PLOTSQUARED VERSION IS NOT ======");
-            Bukkit.getLogger().severe("======  FOR USE ON MINECRAFT 1.13 OR   ======");
+            Bukkit.getLogger().severe("======  FOR USE ON MINECRAFT 1.9 OR   ======");
             Bukkit.getLogger().severe("======     ABOVE. DISABLING PLUGIN.    ======");
             Bukkit.getLogger().severe("======          DOWNLOAD FROM          ======");
-            Bukkit.getLogger().severe("https://ci.athion.net/job/PlotSquared-Breaking/");
+            Bukkit.getLogger().severe("https://ci.athion.net/view/Everything/");
             Bukkit.getLogger().severe("==============================================");
             Bukkit.getPluginManager().disablePlugin(this);
             throw new UnsupportedOperationException("INCORRECT PLOTSQUARED VERSION");
@@ -349,8 +348,6 @@ public final class BukkitMain extends JavaPlugin implements Listener, IPlotMain 
                             case COMPLEX_PART:
                             case FISHING_HOOK:
                             case ENDER_SIGNAL:
-                            case LINGERING_POTION:
-                            case AREA_EFFECT_CLOUD:
                             case EXPERIENCE_ORB:
                             case LEASH_HITCH:
                             case FIREWORK:
@@ -364,12 +361,8 @@ public final class BukkitMain extends JavaPlugin implements Listener, IPlotMain 
                             case THROWN_EXP_BOTTLE:
                             case SPLASH_POTION:
                             case SNOWBALL:
-                            case SHULKER_BULLET:
-                            case SPECTRAL_ARROW:
-                            case TIPPED_ARROW:
                             case ENDER_PEARL:
                             case ARROW:
-                            case LLAMA_SPIT:
                                 // managed elsewhere | projectile
                                 continue;
                             case ITEM_FRAME:
@@ -412,7 +405,6 @@ public final class BukkitMain extends JavaPlugin implements Listener, IPlotMain 
                                 }
                             case SMALL_FIREBALL:
                             case FIREBALL:
-                            case DRAGON_FIREBALL:
                             case DROPPED_ITEM:
                                 if (Settings.Enabled_Components.KILL_ROAD_ITEMS && plotArea.getOwnedPlotAbs(BukkitUtil.getLocation(entity.getLocation())) == null) {
                                     entity.remove();
@@ -423,21 +415,6 @@ public final class BukkitMain extends JavaPlugin implements Listener, IPlotMain 
                             case FALLING_BLOCK:
                                 // managed elsewhere
                                 continue;
-                            case LLAMA:
-                            case DONKEY:
-                            case MULE:
-                            case ZOMBIE_HORSE:
-                            case SKELETON_HORSE:
-                            case HUSK:
-                            case ELDER_GUARDIAN:
-                            case WITHER_SKELETON:
-                            case STRAY:
-                            case ZOMBIE_VILLAGER:
-                            case EVOKER:
-                            case EVOKER_FANGS:
-                            case VEX:
-                            case VINDICATOR:
-                            case POLAR_BEAR:
                             case BAT:
                             case BLAZE:
                             case CAVE_SPIDER:
@@ -494,43 +471,6 @@ public final class BukkitMain extends JavaPlugin implements Listener, IPlotMain 
                                         }
                                     }
                                 }
-                                continue;
-                            }
-                            case SHULKER: {
-                                if (Settings.Enabled_Components.KILL_ROAD_MOBS) {
-                                    LivingEntity livingEntity = (LivingEntity) entity;
-                                    List<MetadataValue> meta = entity.getMetadata("plot");
-                                    if (meta != null && !meta.isEmpty()) {
-                                        if (livingEntity.isLeashed()) continue;
-
-                                        List<MetadataValue> keep = entity.getMetadata("keep");
-                                        if (keep != null && !keep.isEmpty()) continue;
-
-                                        PlotId originalPlotId = (PlotId) meta.get(0).value();
-                                        if (originalPlotId != null) {
-                                            com.intellectualcrafters.plot.object.Location pLoc = BukkitUtil.getLocation(entity.getLocation());
-                                            PlotArea area = pLoc.getPlotArea();
-                                            if (area != null) {
-                                                PlotId currentPlotId = PlotId.of(area.getPlotAbs(pLoc));
-                                                if (!originalPlotId.equals(currentPlotId) && (currentPlotId == null || !area.getPlot(originalPlotId).equals(area.getPlot(currentPlotId)))) {
-                                                    iterator.remove();
-                                                    entity.remove();
-                                                }
-                                            }
-                                        }
-                                    } else {
-                                        //This is to apply the metadata to already spawned shulkers (see EntitySpawnListener.java)
-                                        com.intellectualcrafters.plot.object.Location pLoc = BukkitUtil.getLocation(entity.getLocation());
-                                        PlotArea area = pLoc.getPlotArea();
-                                        if (area != null) {
-                                            PlotId currentPlotId = PlotId.of(area.getPlotAbs(pLoc));
-                                            if (currentPlotId != null) {
-                                                entity.setMetadata("plot", new FixedMetadataValue((Plugin) PS.get().IMP, currentPlotId));
-                                            }
-                                        }
-                                    }
-                                }
-                                continue;
                             }
                         }
                     }
@@ -591,13 +531,6 @@ public final class BukkitMain extends JavaPlugin implements Listener, IPlotMain 
                 e.printStackTrace();
             }
         }
-        if (PS.get().checkVersion(getServerVersion(), BukkitVersion.v1_9_0)) {
-            try {
-                getServer().getPluginManager().registerEvents(new PlayerEvents_1_9(main), this);
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override
@@ -609,11 +542,7 @@ public final class BukkitMain extends JavaPlugin implements Listener, IPlotMain 
     public void registerPlotPlusEvents() {
         PlotPlusListener.startRunnable(this);
         getServer().getPluginManager().registerEvents(new PlotPlusListener(), this);
-        if (PS.get().checkVersion(getServerVersion(), BukkitVersion.v1_12_0)) {
-            getServer().getPluginManager().registerEvents(new PlotPlusListener_1_12(), this);
-        } else {
-            getServer().getPluginManager().registerEvents(new PlotPlusListener_Legacy(), this);
-        }
+        getServer().getPluginManager().registerEvents(new PlotPlusListener_Legacy(), this);
     }
 
     @Override
@@ -650,12 +579,6 @@ public final class BukkitMain extends JavaPlugin implements Listener, IPlotMain 
         } catch (ClassNotFoundException | NoSuchFieldException | NoSuchMethodException e) {
             PS.debug(SendChunk.class + " does not support " + StringMan.getString(getServerVersion()));
             MainUtil.canSendChunk = false;
-        }
-		if (PS.get().checkVersion(getServerVersion(), BukkitVersion.v1_13_0)) {
-            return QueueProvider.of(BukkitLocalQueue.class, BukkitLocalQueue.class);
-        }
-        if (PS.get().checkVersion(getServerVersion(), BukkitVersion.v1_9_0)) {
-            return QueueProvider.of(BukkitLocalQueue_1_9.class, BukkitLocalQueue.class);
         }
         if (PS.get().checkVersion(getServerVersion(), BukkitVersion.v1_8_3)) {
             return QueueProvider.of(BukkitLocalQueue_1_8_3.class, BukkitLocalQueue.class);
@@ -738,7 +661,7 @@ public final class BukkitMain extends JavaPlugin implements Listener, IPlotMain 
             PS.log(C.PREFIX + " &c[WARN] Titles are disabled - please update your version of Bukkit to support this feature.");
             Settings.TITLES = false;
         } else {
-            AbstractTitle.TITLE_CLASS = new DefaultTitle_111();
+            AbstractTitle.TITLE_CLASS = new DefaultTitle_183();
             if (wrapper instanceof DefaultUUIDWrapper || wrapper.getClass() == OfflineUUIDWrapper.class && !Bukkit.getOnlineMode()) {
                 Settings.UUID.NATIVE_UUID_PROVIDER = true;
             }

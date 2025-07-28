@@ -24,5 +24,4 @@ class LivingEntityStats {
     ItemStack leggings;
     ItemStack chestplate;
     Collection<PotionEffect> potions;
-    ItemStack offHand;
 }

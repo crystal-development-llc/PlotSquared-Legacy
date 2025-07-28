@@ -1,12 +1,10 @@
 package com.plotsquared.bukkit.object.entity;
 
 import com.intellectualcrafters.plot.PS;
-import com.plotsquared.bukkit.util.BukkitVersion;
 import org.bukkit.Art;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Rotation;
-import org.bukkit.TreeSpecies;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
@@ -40,7 +38,6 @@ public class EntityWrapper {
     private TameableStats tamed;
     private ArmorStandStats stand;
     private HorseStats horse;
-    private boolean noGravity;
 
     public EntityWrapper(Entity entity, short depth) {
         this.hash = entity.getEntityId();
@@ -69,18 +66,9 @@ public class EntityWrapper {
         if (depth == 1) {
             return;
         }
-        if (PS.get().checkVersion(PS.get().IMP.getServerVersion(), BukkitVersion.v1_10_0) || entity instanceof ArmorStand) {
-            if (!entity.hasGravity()) {
-                this.noGravity = true;
-            }
-        }
         switch (entity.getType()) {
             case ARROW:
             case BOAT:
-                if (PS.get().checkVersion(PS.get().IMP.getServerVersion(), BukkitVersion.v1_9_0)) {
-                    Boat boat = (Boat) entity;
-                    this.dataByte = getOrdinal(TreeSpecies.values(), boat.getWoodType());
-                }
             case COMPLEX_PART:
             case EGG:
             case ENDER_CRYSTAL:
@@ -108,12 +96,6 @@ public class EntityWrapper {
             case WEATHER:
             case WITHER_SKULL:
             case UNKNOWN:
-            case TIPPED_ARROW:
-            case SPECTRAL_ARROW:
-            case SHULKER_BULLET:
-            case DRAGON_FIREBALL:
-            case LINGERING_POTION:
-            case AREA_EFFECT_CLOUD:
                 // Do this stuff later
                 return;
             default:
@@ -187,7 +169,6 @@ public class EntityWrapper {
             case COW:
             case MUSHROOM_COW:
             case PIG:
-            case POLAR_BEAR:
                 storeAgeable((Ageable) entity);
                 storeLiving((LivingEntity) entity);
                 return;
@@ -265,8 +246,6 @@ public class EntityWrapper {
                 }
                 return;
             case ENDER_DRAGON:
-                EnderDragon entity1 = (EnderDragon) entity;
-                this.dataByte = (byte) entity1.getPhase().ordinal();
                 return;
             case GHAST:
             case MAGMA_CUBE:
@@ -282,7 +261,6 @@ public class EntityWrapper {
             case ENDERMAN:
             case CREEPER:
             case BLAZE:
-            case SHULKER:
             case SNOWMAN:
                 storeLiving((LivingEntity) entity);
                 return;
@@ -336,12 +314,7 @@ public class EntityWrapper {
 
     void restoreEquipment(LivingEntity entity) {
         EntityEquipment equipment = entity.getEquipment();
-        if (PS.get().checkVersion(PS.get().IMP.getServerVersion(), BukkitVersion.v1_9_0)) {
-            equipment.setItemInMainHand(this.lived.mainHand);
-            equipment.setItemInOffHand(this.lived.offHand);
-        } else {
-            equipment.setItemInHand(this.lived.mainHand);
-        }
+        equipment.setItemInHand(this.lived.mainHand);
         equipment.setHelmet(this.lived.helmet);
         equipment.setChestplate(this.lived.chestplate);
         equipment.setLeggings(this.lived.leggings);
@@ -380,13 +353,7 @@ public class EntityWrapper {
     }
 
     void storeEquipment(EntityEquipment equipment) {
-        if (PS.get().checkVersion(PS.get().IMP.getServerVersion(), BukkitVersion.v1_9_0)) {
-            this.lived.mainHand = equipment.getItemInMainHand().clone();
-            this.lived.offHand = equipment.getItemInOffHand().clone();
-        } else {
-            this.lived.mainHand = equipment.getItemInHand().clone();
-            this.lived.offHand = null;
-        }
+        this.lived.mainHand = equipment.getItemInHand().clone();
         this.lived.boots = equipment.getBoots().clone();
         this.lived.leggings = equipment.getLeggings().clone();
         this.lived.chestplate = equipment.getChestplate().clone();
@@ -473,19 +440,9 @@ public class EntityWrapper {
         if (this.depth == 1) {
             return entity;
         }
-        if (PS.get().checkVersion(PS.get().IMP.getServerVersion(), BukkitVersion.v1_10_0) || entity instanceof ArmorStand) {
-            if (this.noGravity) {
-                entity.setGravity(false);
-            }
-        }
         switch (entity.getType()) {
             case ARROW:
             case BOAT:
-                if (PS.get().checkVersion(PS.get().IMP.getServerVersion(), BukkitVersion.v1_9_0)) {
-                    Boat boat = (Boat) entity;
-                    boat.setWoodType(TreeSpecies.values()[dataByte]);
-                }
-
             case COMPLEX_PART:
             case EGG:
             case ENDER_CRYSTAL:
@@ -514,12 +471,6 @@ public class EntityWrapper {
             case SPLASH_POTION:
             case THROWN_EXP_BOTTLE:
             case WEATHER:
-            case TIPPED_ARROW:
-            case SPECTRAL_ARROW:
-            case SHULKER_BULLET:
-            case LINGERING_POTION:
-            case AREA_EFFECT_CLOUD:
-            case DRAGON_FIREBALL:
             case WITHER_SKULL:
             case MINECART_FURNACE:
             case UNKNOWN:
@@ -582,7 +533,6 @@ public class EntityWrapper {
             case VILLAGER:
             case CHICKEN:
             case COW:
-            case POLAR_BEAR:
             case MUSHROOM_COW:
             case PIG:
                 restoreAgeable((Ageable) entity);
@@ -671,11 +621,6 @@ public class EntityWrapper {
                 restoreLiving((LivingEntity) entity);
                 return entity;
             case ENDER_DRAGON:
-                if (this.dataByte != 0) {
-                    ((EnderDragon) entity).setPhase(EnderDragon.Phase.values()[this.dataByte]);
-                }
-                restoreLiving((LivingEntity) entity);
-                return entity;
             case ENDERMITE:
             case GHAST:
             case MAGMA_CUBE:
@@ -692,7 +637,6 @@ public class EntityWrapper {
             case CREEPER:
             case BLAZE:
             case SNOWMAN:
-            case SHULKER:
                 restoreLiving((LivingEntity) entity);
                 return entity;
             case IRON_GOLEM:

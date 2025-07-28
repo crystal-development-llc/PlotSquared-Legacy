@@ -481,11 +481,6 @@ public class BukkitChunkManager extends ChunkManager {
             case SNOWBALL:
             case ENDER_PEARL:
             case ARROW:
-            case TIPPED_ARROW:
-            case SHULKER_BULLET:
-            case SPECTRAL_ARROW:
-            case DRAGON_FIREBALL:
-            case LLAMA_SPIT:
                 // projectile
             case PRIMED_TNT:
             case FALLING_BLOCK:
@@ -501,9 +496,6 @@ public class BukkitChunkManager extends ChunkManager {
             case LIGHTNING:
             case WITHER_SKULL:
             case UNKNOWN:
-            case AREA_EFFECT_CLOUD:
-            case LINGERING_POTION:
-            case EVOKER_FANGS:
                 // non moving / unremovable
                 break;
             case ITEM_FRAME:
@@ -522,7 +514,6 @@ public class BukkitChunkManager extends ChunkManager {
             case BOAT:
                 count[4]++;
                 break;
-            case POLAR_BEAR:
             case RABBIT:
             case SHEEP:
             case MUSHROOM_COW:
@@ -537,11 +528,6 @@ public class BukkitChunkManager extends ChunkManager {
             case COW:
             case SNOWMAN:
             case BAT:
-            case DONKEY:
-            case LLAMA:
-            case SKELETON_HORSE:
-            case ZOMBIE_HORSE:
-            case MULE:
                 // animal
                 count[3]++;
                 count[1]++;
@@ -564,15 +550,6 @@ public class BukkitChunkManager extends ChunkManager {
             case WITCH:
             case WITHER:
             case ZOMBIE:
-            case SHULKER:
-            case ELDER_GUARDIAN:
-            case STRAY:
-            case HUSK:
-            case EVOKER:
-            case VEX:
-            case WITHER_SKELETON:
-            case ZOMBIE_VILLAGER:
-            case VINDICATOR:
                 // monster
                 count[3]++;
                 count[2]++;

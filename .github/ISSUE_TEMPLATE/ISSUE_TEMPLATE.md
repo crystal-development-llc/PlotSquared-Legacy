@@ -38,10 +38,6 @@ assignees: ''
 **Select one**
 <!-- Select the type you are reporting the issue for (put an "X" between of brackets): 
 If your version is not listed, make sure your server runs the latest release of the version. -->
-- [] Minecraft 1.12.2
-- [] Minecraft 1.11.2
-- [] Minecraft 1.10.2
-- [] Minecraft 1.9.4
 - [] Minecraft 1.8.8
 
 ### Server build info: 

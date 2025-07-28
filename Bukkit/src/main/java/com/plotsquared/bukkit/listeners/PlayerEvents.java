@@ -12,7 +12,6 @@ import com.plotsquared.bukkit.BukkitMain;
 import com.plotsquared.bukkit.object.BukkitLazyBlock;
 import com.plotsquared.bukkit.object.BukkitPlayer;
 import com.plotsquared.bukkit.util.BukkitUtil;
-import com.plotsquared.bukkit.util.BukkitVersion;
 import com.plotsquared.listener.PlayerBlockEventType;
 import com.plotsquared.listener.PlotListener;
 import org.bukkit.Bukkit;
@@ -66,9 +65,6 @@ public class PlayerEvents extends PlotListener implements Listener {
     // To prevent recursion
     private boolean tmpTeleport = true;
 
-    private boolean v112 =
-        PS.get().checkVersion(PS.imp().getServerVersion(), BukkitVersion.v1_12_0);
-
     public static void sendBlockChange(final org.bukkit.Location bloc, final Material type,
         final byte data) {
         TaskManager.runTaskLater(() -> {
@@ -98,21 +94,15 @@ public class PlayerEvents extends PlotListener implements Listener {
         switch (entity.getType()) {
             case PLAYER:
                 return false;
-            case LLAMA_SPIT:
             case SMALL_FIREBALL:
             case FIREBALL:
             case DROPPED_ITEM:
             case EGG:
             case THROWN_EXP_BOTTLE:
             case SPLASH_POTION:
-            case LINGERING_POTION:
             case SNOWBALL:
             case ENDER_PEARL:
             case ARROW:
-            case TIPPED_ARROW:
-            case SPECTRAL_ARROW:
-            case SHULKER_BULLET:
-            case DRAGON_FIREBALL:
                 // projectile
             case PRIMED_TNT:
             case FALLING_BLOCK:
@@ -125,10 +115,8 @@ public class PlayerEvents extends PlotListener implements Listener {
             case LEASH_HITCH:
             case FIREWORK:
             case WEATHER:
-            case AREA_EFFECT_CLOUD:
             case LIGHTNING:
             case WITHER_SKULL:
-            case EVOKER_FANGS:
             case UNKNOWN:
                 // non moving / unmovable
                 return checkEntity(plot, Flags.ENTITY_CAP);
@@ -146,7 +134,6 @@ public class PlayerEvents extends PlotListener implements Listener {
             case MINECART_TNT:
             case BOAT:
                 return checkEntity(plot, Flags.ENTITY_CAP, Flags.VEHICLE_CAP);
-            case POLAR_BEAR:
             case RABBIT:
             case SHEEP:
             case MUSHROOM_COW:
@@ -161,15 +148,8 @@ public class PlayerEvents extends PlotListener implements Listener {
             case SNOWMAN:
             case BAT:
             case HORSE:
-            case DONKEY:
-            case LLAMA:
-            case MULE:
-            case ZOMBIE_HORSE:
-            case SKELETON_HORSE:
-            case PARROT:
                 // animal
                 return checkEntity(plot, Flags.ENTITY_CAP, Flags.MOB_CAP, Flags.ANIMAL_CAP);
-            case ILLUSIONER:
             case BLAZE:
             case CAVE_SPIDER:
             case CREEPER:
@@ -188,15 +168,6 @@ public class PlayerEvents extends PlotListener implements Listener {
             case WITCH:
             case WITHER:
             case ZOMBIE:
-            case SHULKER:
-            case HUSK:
-            case STRAY:
-            case ELDER_GUARDIAN:
-            case WITHER_SKELETON:
-            case VINDICATOR:
-            case EVOKER:
-            case VEX:
-            case ZOMBIE_VILLAGER:
                 // monster
                 return checkEntity(plot, Flags.ENTITY_CAP, Flags.MOB_CAP, Flags.HOSTILE_CAP);
             default:
@@ -223,7 +194,6 @@ public class PlayerEvents extends PlotListener implements Listener {
     @EventHandler public void onRedstoneEvent(BlockRedstoneEvent event) {
         Block block = event.getBlock();
         switch (block.getType()) {
-            case OBSERVER:
             case PISTON_BASE:
             case PISTON_STICKY_BASE:
                 if (!Settings.Redstone.CHECK_PISTONS) {
@@ -484,13 +454,6 @@ public class PlayerEvents extends PlotListener implements Listener {
                 moveTmp.setCancelled(false);
                 fieldPlayer.set(moveTmp, player);
 
-                List<Entity> passengers;
-                if (v112) {
-                    passengers = vehicle.getPassengers();
-                } else {
-                    passengers = null;
-                }
-
                 this.playerMove(moveTmp);
                 org.bukkit.Location dest;
                 if (moveTmp.isCancelled()) {
@@ -502,19 +465,10 @@ public class PlayerEvents extends PlotListener implements Listener {
                     dest = null;
                 }
                 if (dest != null) {
-                    if (passengers != null) {
-                        vehicle.eject();
-                        vehicle.setVelocity(new Vector(0d, 0d, 0d));
-                        vehicle.teleport(dest);
-                        for (final Entity entity : passengers) {
-                            vehicle.addPassenger(entity);
-                        }
-                    } else {
-                        vehicle.eject();
-                        vehicle.setVelocity(new Vector(0d, 0d, 0d));
-                        vehicle.teleport(dest);
-                        vehicle.setPassenger(player);
-                    }
+                    vehicle.eject();
+                    vehicle.setVelocity(new Vector(0d, 0d, 0d));
+                    vehicle.teleport(dest);
+                    vehicle.setPassenger(player);
                     return;
                 }
             }
@@ -927,7 +881,6 @@ public class PlayerEvents extends PlotListener implements Listener {
                 }
                 return;
             case ICE:
-            case FROSTED_ICE:
             case PACKED_ICE:
                 if (Flags.ICE_FORM.isFalse(plot)) {
                     event.setCancelled(true);
@@ -1242,24 +1195,6 @@ public class PlayerEvents extends PlotListener implements Listener {
                     case NOTE_BLOCK:
                     case JUKEBOX:
                     case WORKBENCH:
-                    case SILVER_SHULKER_BOX:
-                    case BLACK_SHULKER_BOX:
-                    case BLUE_SHULKER_BOX:
-                    case RED_SHULKER_BOX:
-                    case PINK_SHULKER_BOX:
-                    case ORANGE_SHULKER_BOX:
-                    case WHITE_SHULKER_BOX:
-                    case YELLOW_SHULKER_BOX:
-                    case BROWN_SHULKER_BOX:
-                    case CYAN_SHULKER_BOX:
-                    case GREEN_SHULKER_BOX:
-                    case PURPLE_SHULKER_BOX:
-                    case GRAY_SHULKER_BOX:
-                    case LIME_SHULKER_BOX:
-                    case LIGHT_BLUE_SHULKER_BOX:
-                    case MAGENTA_SHULKER_BOX:
-                    case COMMAND_REPEATING:
-                    case COMMAND_CHAIN:
                         eventType = PlayerBlockEventType.INTERACT_BLOCK;
                         break;
                     case DRAGON_EGG:
@@ -2065,19 +2000,14 @@ public class PlayerEvents extends PlotListener implements Listener {
     @SuppressWarnings("deprecation") @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityCombustByEntity(EntityCombustByEntityEvent event) {
         EntityDamageByEntityEvent eventChange = null;
-        if (PS.get().checkVersion(PS.get().IMP.getServerVersion(), BukkitVersion.v1_11_0)) {
-            eventChange = new EntityDamageByEntityEvent(event.getCombuster(), event.getEntity(),
-                EntityDamageEvent.DamageCause.FIRE_TICK, (double) event.getDuration());
-        } else {
-            try {
-                Constructor<EntityDamageByEntityEvent> constructor = EntityDamageByEntityEvent.class
+        try {
+            Constructor<EntityDamageByEntityEvent> constructor = EntityDamageByEntityEvent.class
                     .getConstructor(Entity.class, Entity.class, EntityDamageEvent.DamageCause.class,
-                        Integer.TYPE);
-                eventChange = constructor.newInstance(event.getCombuster(), event.getEntity(),
+                            Integer.TYPE);
+            eventChange = constructor.newInstance(event.getCombuster(), event.getEntity(),
                     EntityDamageEvent.DamageCause.FIRE_TICK, event.getDuration());
-            } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
         }
         if (eventChange == null) {
             return;

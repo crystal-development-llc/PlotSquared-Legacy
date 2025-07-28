@@ -111,18 +111,6 @@ public class StateWrapper {
         return tags;
     }
 
-    /*
-     * TODO: Move this into the sponge module!
-     *
-    public Map<String, Tag> serializeItem(final org.spongepowered.api.item.inventory.ItemStack item) {
-        final Map<String, Tag> data = new HashMap<String, Tag>();
-        
-        // FIXME serialize sponge item
-        
-        return data;
-    }
-    */
-
     public Map<String, Tag> serializeItem(ItemStack item) {
         Map<String, Tag> data = new HashMap<>();
         data.put("id", new ShortTag("id", (short) item.getTypeId()));
