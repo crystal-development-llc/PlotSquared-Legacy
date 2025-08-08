@@ -23,7 +23,7 @@ tasks {
     clean {
         delete("builds")
     }
-    getByName<Jar>("jar") {
+    withType<Jar> {
         enabled = false
     }
     register<Javadoc>("aggregatedJavadocs") {
