@@ -1,5 +1,3 @@
-import java.time.format.DateTimeFormatter
-
 dependencies {
     compileOnlyApi(libs.annotations)
 
@@ -9,31 +7,31 @@ dependencies {
     compileOnlyApi(libs.snakeyaml)
 
     // Plugins
-    compileOnly(libs.worldedit.core) {
-        exclude(group = "bukkit-classloader-check")
-        exclude(group = "mockito-core")
-        exclude(group = "dummypermscompat")
+    compileOnly(libs.worldeditCore) {
+        exclude("org.mockito")
     }
 
     // Testing
-    testImplementation(rootProject.libs.guava)
-    testImplementation(rootProject.libs.junit.jupiter)
-    testRuntimeOnly(rootProject.libs.junit.platform.launcher)
+    testImplementation(libs.guava)
+    testImplementation(libs.junitJupiter)
+    testRuntimeOnly(libs.junitPlatformLauncher)
 }
 
-tasks.processResources {
-    filesMatching("plugin.properties") {
-        expand(
-                "version" to project.version.toString(),
-                "commit" to rootProject.grgit.head().abbreviatedId,
-                "date" to rootProject.grgit.head().dateTime.format(DateTimeFormatter.ofPattern("yy.MM.dd"))
+tasks {
+    processResources {
+        val props = mutableMapOf(
+            "version" to project.version.toString(),
+            "commit" to project.latestCommitHash(),
+            "date" to project.latestCommitDateTime(),
         )
-    }
-
-    doLast {
-        copy {
-            from(layout.buildDirectory.file("$rootDir/LICENSE"))
-            into(layout.buildDirectory.dir("resources/main"))
+        inputs.properties(props)
+        filesMatching("plugin.properties") {
+            expand(props)
         }
+    }
+    javadoc {
+        applyLinks(
+            "https://intellectualsites.github.io/fastasyncworldedit-javadocs/worldedit-core/",
+        )
     }
 }

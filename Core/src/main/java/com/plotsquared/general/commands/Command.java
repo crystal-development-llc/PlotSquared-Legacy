@@ -259,7 +259,6 @@ public abstract class Command {
      * @param player Caller
      * @param args Arguments
      * @param confirm Instance, Success, Failure
-     * @return
      */
     public void execute(PlotPlayer player, String[] args, RunnableVal3<Command, Runnable, Runnable> confirm,
             RunnableVal2<Command, CommandResult> whenDone) throws CommandException {

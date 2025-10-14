@@ -1864,7 +1864,7 @@ public class PS{
      * @param alias to search plots
      * @param worldname to filter alias to a specific world [optional] null means all worlds
      *
-     * @return Set<{@link Plot}> empty if nothing found
+     * @return Set of {@link Plot plots}, empty if nothing found
      */
     public Set<Plot> getPlotsByAlias(String alias, String worldname) {
     	Set<Plot> result = new HashSet<>();

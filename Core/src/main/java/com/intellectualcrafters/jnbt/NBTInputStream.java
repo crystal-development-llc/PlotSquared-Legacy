@@ -24,8 +24,6 @@ public final class NBTInputStream implements Closeable {
      * Creates a new {@code NBTInputStream}, which will source its data from the specified input stream.
      *
      * @param is the input stream
-     *
-     * @throws IOException if an I/O error occurs
      */
     public NBTInputStream(InputStream is) {
         this.is = new DataInputStream(is);

@@ -821,7 +821,7 @@ public class Plot {
      * Clear a plot.
      *
      * @param whenDone A runnable to execute when clearing finishes, or null
-     * @see this#clear(boolean, boolean, Runnable)
+     * @see #clear(boolean, boolean, Runnable)
      * @see #deletePlot(Runnable) to clear and delete a plot
      */
     public void clear(Runnable whenDone) {
@@ -1205,7 +1205,7 @@ public class Plot {
      * Unlink a plot and remove the roads
      *
      * @return true if plot was linked
-     * @see this#unlinkPlot(boolean, boolean)
+     * @see #unlinkPlot(boolean, boolean)
      */
     public boolean unlink() {
         return this.unlinkPlot(true, true);
@@ -1792,8 +1792,7 @@ public class Plot {
      * @param whenDone    A task to run when finished, or null
      * @return boolean if swap was successful
      * @see ChunkManager#swap(Location, Location, Location, Location, Runnable) to swap terrain
-     * @see this#swapData(Plot, Runnable) to swap plot settings
-     * @see this#swapData(Plot, Runnable)
+     * @see #swapData(Plot, Runnable)
      */
     public boolean swap(Plot destination, Runnable whenDone) {
         return this.move(destination, whenDone, true);
@@ -1907,8 +1906,6 @@ public class Plot {
 
     /**
      * Export the plot as a schematic to the configured output directory.
-     *
-     * @return
      */
     public void export(final RunnableVal<Boolean> whenDone) {
         SchematicHandler.manager.getCompoundTag(this, new RunnableVal<CompoundTag>() {

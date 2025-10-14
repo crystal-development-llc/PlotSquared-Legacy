@@ -163,7 +163,7 @@ public abstract class PlotPlayer implements CommandCaller, OfflinePlotPlayer {
     /**
      * Get the number of plots this player owns.
      *
-     * @see #getPlotCount(String);
+     * @see #getPlotCount(String) 
      * @see #getPlots()
      *
      * @return number of plots within the scope (globally, or in the player's current world as defined in the settings.yml)

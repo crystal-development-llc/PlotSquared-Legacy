@@ -96,8 +96,6 @@ public abstract class SchematicHandler {
      * @param plot      plot to paste in
      * @param xOffset  offset x to paste it from plot origin
      * @param zOffset  offset z to paste it from plot origin
-     *
-     * @return boolean true if succeeded
      */
     public void paste(final Schematic schematic, final Plot plot, final int xOffset, final int yOffset, final int zOffset, final boolean autoHeight, final RunnableVal<Boolean> whenDone) {
         TaskManager.runTask(new Runnable() {
