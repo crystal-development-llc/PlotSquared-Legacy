@@ -1,4 +1,6 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+plugins {
+    id("p2.shadow-conventions")
+}
 
 dependencies {
     api(projects.plotsquaredCore)
@@ -30,8 +32,5 @@ tasks {
             "https://hub.spigotmc.org/javadocs/spigot/",
             "https://intellectualsites.github.io/fastasyncworldedit-javadocs/worldedit-bukkit/",
         )
-    }
-    named<ShadowJar>("shadowJar") {
-        dependsOn(":plotsquared-core:shadowJar")
     }
 }

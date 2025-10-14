@@ -11,7 +11,7 @@ shadow {
 
 tasks {
     named<Jar>("jar") {
-        enabled = false
+        archiveClassifier.set("unshaded")
     }
     named<ShadowJar>("shadowJar") {
         // https://gradleup.com/shadow/configuration/merging/#handling-duplicates-strategy
